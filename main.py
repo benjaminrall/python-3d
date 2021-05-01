@@ -10,7 +10,7 @@ FRAMERATE = 240
 # ICON_IMG = pygame.image.load(os.path.join("imgs", "icon.png"))
 
 # Pygame Setup
-pygame.init()
+#pygame.init()
 win = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
 pygame.display.set_caption("3D Projection")
 # pygame.display.set_icon(ICON_IMG)
@@ -23,9 +23,6 @@ cubes = []
 for i in range(-2, 3, 1):
     for j in range(-2, 2, 1):
         cubes.append(Cube(i, j))
-        pass
-
-cubes.append(Cube(0,0))
 
 # Variables
 running = True
