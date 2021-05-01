@@ -4,9 +4,9 @@ from camera import Camera
 from cube import Cube
 
 # Constants
-WIN_WIDTH = 800
-WIN_HEIGHT = 800
-FRAMERATE = 512
+WIN_WIDTH = 1920
+WIN_HEIGHT = 1080
+FRAMERATE = 240
 # ICON_IMG = pygame.image.load(os.path.join("imgs", "icon.png"))
 
 # Pygame Setup
@@ -17,16 +17,22 @@ pygame.display.set_caption("3D Projection")
 clock = pygame.time.Clock()
 
 # Objects
-cam = Camera(win, 0, 0, 200)
+cam = Camera(win, 0, 0, 512)
 
-cubes= [Cube(0, 0)]
+cubes = []
+for i in range(-2, 3, 1):
+    for j in range(-2, 2, 1):
+        cubes.append(Cube(i, j))
+        pass
+
+cubes.append(Cube(0,0))
 
 # Variables
 running = True
 x = 0
 y = 0
 z = 0
-inc = 0.0025
+inc = 0.005
 rx = True
 ry = True
 rz = True
