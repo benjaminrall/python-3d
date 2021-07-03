@@ -6,7 +6,7 @@ from cube import Cube
 # Constants
 WIN_WIDTH = 800
 WIN_HEIGHT = 600
-FRAMERATE = 240
+FRAMERATE = 60
 # ICON_IMG = pygame.image.load(os.path.join("imgs", "icon.png"))
 
 # Pygame Setup
@@ -15,14 +15,15 @@ win = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
 pygame.display.set_caption("3D Projection")
 # pygame.display.set_icon(ICON_IMG)
 clock = pygame.time.Clock()
+screen = pygame.Surface((400, 400))
 
 # Objects
-cam = Camera(win, 0, 0, 128)
+cam = Camera(screen, 0, 0, 64)
+cam.set_bounds((-20, -20), (20, 20))
 
-cubes = []
-for i in range(-5, 6, 1):
-    for j in range(-3, 4, 1):
-        cubes.append(Cube(3 * i, 3 * j))
+cubes = [Cube(0, 0)]
+for i in range(20):
+    cubes.append(Cube(random.randint(-5, 6) * 3, random.randint(-5, 6) * 3))
 
 # Variables
 running = True
@@ -72,6 +73,7 @@ if __name__ == '__main__':
                         speed = 1
 
         win.fill((0, 0, 0))
+        screen.fill((0, 0, 0))
         
         for cube in cubes:
             cube.rotate((x, y, z))
@@ -84,9 +86,9 @@ if __name__ == '__main__':
         if rz:
             z = (z + inc) % 360
         if zoomingIn:
-            cam.zoom += 1
+            cam.zoom_in(1, 112)
         if zoomingOut:
-            cam.zoom = max(1, cam.zoom - 1)
+            cam.zoom_out(1, 16)
         if panning[0]:
             cam.pan((speed, 0))
         if panning[1]:
@@ -97,7 +99,13 @@ if __name__ == '__main__':
             cam.pan((0, -speed))
         if True in panning:
             speed += 0.5
+        cam.enforce_bounds()
         
+        #cam.draw_line((cam.x - (cam.width / 2), (cam.y - (cam.height / 2))), (cam.x + (cam.width / 2), (cam.y + (cam.height / 2))), (255, 255, 255))
+        #cam.draw_rect((cam.x - 0.1, cam.y - 0.1, 0.2, 0.2), (255, 255, 255))
+        pygame.draw.rect(win, (255, 255, 255), (199, 99, 402, 402))
+        win.blit(screen, ((WIN_WIDTH - 400) // 2, (WIN_HEIGHT - 400) // 2))
+
         pygame.display.update()
 
         clock.tick(FRAMERATE)
