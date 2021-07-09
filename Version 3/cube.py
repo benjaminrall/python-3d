@@ -97,15 +97,13 @@ class PerspectiveCube:
 
     def draw(self, cam):
         for edge in self.projectedEdges:
-            
+            break
             start = edge[0]
             end = edge[1]
             cam.draw_line((start[0], start[1]),(end[0], end[1]), (255, 255, 255))
         colours = [(0, 255, 0), (255, 0, 0), (0, 255, 0), (255, 0, 0), (0, 0, 255), (0, 0, 255)]
         for i in self.faceOrder:
             face = self.projectedFaces[i]
-            print(face)
-            break
             cam.draw_polygon(face, colours[i])
 
     def project(self):
