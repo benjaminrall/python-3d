@@ -3,6 +3,7 @@ import math
 import copy
 
 from numpy.core.fromnumeric import sort
+from numpy.core.overrides import verify_matching_signatures
 from pygame.version import ver
 
 def dot_product(a, b):
@@ -69,13 +70,66 @@ class Vector(Graph):
         for edge in self.mesh:
             start = edge[0]
             end = edge[1]
-            cam.draw_line((start[0], start[1]),(end[0], end[1]), (255, 0, 255))
+            cam.draw_line((start[0], start[1]),(end[0], end[1]), (100, 0, 255), width=5)
+
+class Line(Graph):
+    def __init__(self, point, direction):
+        self.point = point
+        self.direction = direction
+        self.cubePlanes = [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]]
+        self.scale = 10
+        self.vertices = []
+        self.calculate_scale(self.scale)
+
+    def draw(self, cam):
+        if len(self.mesh) == 2:
+            start = self.mesh[0]
+            end = self.mesh[1]
+            cam.draw_line((start[0], start[1]),(end[0], end[1]), (0, 255, 255), width = 5)
+
+    def calculate_mesh(self, position, rotation, scale):
+        if scale != self.scale:
+            self.calculate_scale(scale)
+            self.scale = scale
+        vertices = copy.copy(self.vertices)
+        if len(vertices) == 0:
+            self.mesh = []
+            return
+
+        vertices = [np.reshape(vertex, (3, 1)) / scale for vertex in vertices]
+        m_rotation = rotation_matrix(rotation)
+        vertices = [np.reshape(np.dot(m_rotation, vertex), 3) for vertex in vertices]
+        vertices = [[vertex[i] + position[i] for i in range(3)] for vertex in vertices]
+        vertices = [[vertex[i] * (1 / vertex[2]) for i in range(3)] for vertex in vertices]
+
+        self.mesh = vertices
+
+    def calculate_scale(self, scale):
+        size = scale / 2
+        points = []
+        for plane in copy.deepcopy(self.cubePlanes):
+            diff = dot_product(self.direction, plane)
+            if diff != 0:
+                d = (dot_product([ [ point * size for point in plane ][i] - self.point[i] for i in range(3) ], plane)) / diff
+                l = [ d * self.direction[i] for i in range(3) ]
+                point = [ self.point[i] + l[i] for i in range(3) ]
+                points.append(point)
+
+        correctedPoints = []
+        for point in points:
+            inBounds = True
+            for coord in point:
+                if not -size <= coord <= size:
+                    inBounds = False
+            if inBounds:
+                correctedPoints.append(point)
+        self.vertices = correctedPoints
 
 class Plane(Graph):
     def __init__(self, normal, point):
         self.normal = normal
         self.point = point
-        d = (normal[0] * point[0]) + (normal[1] * point[1]) + (normal[2] * point[2])
+        d = dot_product(normal, point)
         self.coefficients = {"x": self.normal[0], "y": self.normal[1], "z": self.normal[2], "d": -d}
         self.vertices = []
         self.scale = 10
@@ -110,7 +164,6 @@ class Plane(Graph):
             if vertex[1] <= startPoint[1]:
                 orderedVertices.append(vertex)
         vertices = orderedVertices
-        
         vertices = [np.reshape(vertex, (3, 1)) / scale for vertex in vertices]
         m_rotation = rotation_matrix(rotation)
         vertices = [np.reshape(np.dot(m_rotation, vertex), 3) for vertex in vertices]
@@ -118,7 +171,6 @@ class Plane(Graph):
         vertices = [[vertex[i] * (1 / vertex[2]) for i in range(3)] for vertex in vertices]
         edgeIndices = [[i, j] for i in range(len(vertices)) for j in range(len(vertices))]
         self.mesh = [[vertices[edge[0]], vertices[edge[1]]] for edge in edgeIndices]
-
         self.mesh = vertices
 
     def calculate_scale(self, scale):
