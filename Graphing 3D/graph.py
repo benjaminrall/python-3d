@@ -2,10 +2,6 @@ import numpy as np
 import math
 import copy
 
-from numpy.core.fromnumeric import sort
-from numpy.core.overrides import verify_matching_signatures
-from pygame.version import ver
-
 def dot_product(a, b):
     return (a[0] * b[0]) + (a[1] * b[1]) + (a[2] * b[2])
 
