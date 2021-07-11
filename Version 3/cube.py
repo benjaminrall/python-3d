@@ -117,7 +117,7 @@ class PerspectiveCube:
             y = ((self.relPos[2]/vertex[2]) * vertex[1]) + self.relPos[1]
             projectedVertices.append([x, y, vertex[2]])
         self.projectedVertices = projectedVertices
-        nearCulling = 0
+        nearCulling = 0.1
 
         self.projectedEdges = [[projectedVertices[edge[0]], projectedVertices[edge[1]]] for edge in self.edgeIndexes if projectedVertices[edge[0]][2] > nearCulling and projectedVertices[edge[1]][2] > nearCulling]
         self.projectedFaces = [[projectedVertices[face[0]], projectedVertices[face[1]], projectedVertices[face[2]], projectedVertices[face[3]]] for face in self.faces if projectedVertices[face[0]][2] > nearCulling and projectedVertices[face[1]][2] > 0 and projectedVertices[face[2]][2] > nearCulling and projectedVertices[face[3]][2] > 0]

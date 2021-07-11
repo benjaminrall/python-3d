@@ -22,8 +22,9 @@ cam = Camera(screen, 0, 0, 200)
 cam.set_bounds((-20, -20), (20, 20))
 
 cubes = []
-cubes.append(PerspectiveCube(0, 0.4, 0, 2))
+cubes.append(PerspectiveCube(0, 0.6, 0, 1.3))
 cubes.append(PerspectiveCube(2, 0, 0, 1))
+cubes.append(PerspectiveCube(0.6, -0.7, 1, 0.7))
 
 # Variables
 running = True
