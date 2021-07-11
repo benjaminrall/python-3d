@@ -21,8 +21,8 @@ clock = pygame.time.Clock()
 cam = Camera(win, 0, 0, 600)
 plot = Plot((0, 0, -2), (0, 0, 0), 10)
 graphs = [Vector(6, 3, 3), Vector(5, 3, 3), Vector(8, -6, 2), Vector(-13, 5, -3), Vector(-0.2, -0.4, 0.5), Vector(3, 8, -6), Vector(-17, 34, 13)]
-graphs = [Plane((2, 3, -5), (0, 2, -3)), Plane((1, 0, 0), (0, 2, 3)) , Plane((0.2, 1, -0.1), (0, -4, 0))]
-graphs = [Plane((1, 1, 1), (-2, -2, -2)), Vector(-5, -5, -5), Vector(2, 5, -3), Vector(7, 3, 8)]
+graphs = [Plane((2, 3, -5), (0, 2, -3)), Plane((1, 0, 0), (0, 2, 3)), Plane((0.2, 1, -0.1), (0, -4, 0)),  Plane((1, 0, 0), (-4, 2, 3))]
+#graphs = [Plane((1, 1, 1), (-2, -2, -2)), Vector(-5, -5, -5), Vector(2, 5, -3), Vector(7, 3, 8)]
 
 # Variables
 running = True
