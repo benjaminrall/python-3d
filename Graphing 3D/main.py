@@ -25,6 +25,7 @@ graphs = [Plane((2, 3, -5), (0, 2, -3)), Plane((1, 0, 0), (0, 2, 3)) , Plane((0.
 graphs = [Plane((1, 1, 1), (-2, -2, -2)), Vector(-5, -5, -5), Vector(2, 5, -3), Vector(7, 3, 8)]
 graphs = [Plane((1, 1, 1), (-2, -2, -2)), Vector(2, 1, 1), Line((2, 1, 1), (3, 2, -4))]
 graphs = [Plane((4, -3, 1), (-1, 0, 0)), Line((0, 0, 1), (1, 3, -4)), Line((2, 5, -2), (8, -5, -1))]
+graphs = [Plane((1, 1, 1), (0, i, 0)) for i in range(-50, 51)]
 
 # Variables
 running = True
