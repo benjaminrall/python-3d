@@ -23,23 +23,6 @@ cube = Cube([0, 0, 0], [0, 0, 45], 2)
 
 # Variables
 running = True
-x = 0
-y = 0
-z = 0
-inc = 0.01
-rx = False
-ry = False
-rz = False
-zoomingIn = False
-zoomingOut = False
-left = False
-right = False
-directions = {pygame.K_LEFT: 0, pygame.K_RIGHT: 1, pygame.K_UP: 2, pygame.K_DOWN: 3}
-panning = [False, False, False, False]
-speed = 1
-
-
-cubes = []
 
 # Main Loop
 if __name__ == '__main__' and False:

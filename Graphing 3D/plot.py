@@ -1,8 +1,6 @@
 import numpy as np
 import math
 
-from pygame.transform import scale
-
 def x_rotation(theta):
     matrix = np.zeros((3, 3))
     c = math.cos(theta)
