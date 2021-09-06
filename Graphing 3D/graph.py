@@ -133,11 +133,6 @@ class Plane(Graph):
         self.calculate_scale(self.scale)
 
     def draw(self, cam):
-        if False:
-            for edge in self.mesh:
-                start = edge[0]
-                end = edge[1]
-                cam.draw_line((start[0], start[1]),(end[0], end[1]), (255, 0, 0))
         if len(self.mesh) > 2:
             cam.draw_polygon(self.mesh, (255, 0, 0))
 

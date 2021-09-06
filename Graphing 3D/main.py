@@ -13,7 +13,7 @@ FRAMERATE = 60
 # Pygame Setup
 #pygame.init()
 win = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
-pygame.display.set_caption("3D Projection")
+pygame.display.set_caption("3D Graphing")
 # pygame.display.set_icon(ICON_IMG)
 clock = pygame.time.Clock()
 
@@ -32,6 +32,8 @@ running = True
 rotating_cube = False
 rotations = [False, False, False, False]
 keys = {pygame.K_s : 0, pygame.K_d : 1, pygame.K_w : 2, pygame.K_a : 3}
+frames = [0, 0]
+
 # Main Loop
 if __name__ == '__main__':
     while running:
@@ -75,4 +77,10 @@ if __name__ == '__main__':
         plot.draw(cam, graphs)
         
         pygame.display.update()
-        clock.tick(FRAMERATE)
+        frames[1] += clock.tick()
+        frames[0] += 1
+
+        if frames[1] > 1000:
+            frames[1] -= 1000
+            print(f"{frames[0]} frames per second")
+            frames[0] = 0
