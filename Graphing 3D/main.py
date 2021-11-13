@@ -20,11 +20,11 @@ clock = pygame.time.Clock()
 # Objects
 cam = Camera(win, 0, 0, 600)
 plot = Plot((0, 0, -2), (0, 0, 0), 10)
-graphs = [Vector(6, 3, 3), Vector(5, 3, 3), Vector(8, -6, 2), Vector(-13, 5, -3), Vector(-0.2, -0.4, 0.5), Vector(3, 8, -6), Vector(-17, 34, 13)]
-graphs = [Plane((2, 3, -5), (0, 2, -3)), Plane((1, 0, 0), (0, 2, 3)) , Plane((0.2, 1, -0.1), (0, -4, 0))]
-graphs = [Plane((1, 1, 1), (-2, -2, -2)), Vector(-5, -5, -5), Vector(2, 5, -3), Vector(7, 3, 8)]
-graphs = [Plane((1, 1, 1), (-2, -2, -2)), Vector(2, 1, 1), Line((2, 1, 1), (3, 2, -4))]
-graphs = [Plane((4, -3, 1), (-1, 0, 0)), Line((0, 0, 1), (1, 3, -4)), Line((2, 5, -2), (8, -5, -1))]
+graphs = [Vector(6, 3, 3), Vector(5, 3, 3), Vector(8, -6, 2), Vector(-13, 5, -3), Vector(-0.2, -0.4, 0.5), Vector(3, 8, -6)]
+#graphs = [Plane((2, 3, -5), (0, 2, -3)), Plane((1, 0, 0), (0, 2, 3)) , Plane((0.2, 1, -0.1), (0, -4, 0))]
+#graphs = [Plane((1, 1, 1), (-2, -2, -2)), Vector(-5, -5, -5), Vector(2, 5, -3), Vector(7, 3, 8)]
+#graphs = [Plane((1, 1, 1), (-2, -2, -2)), Vector(2, 1, 1), Line((2, 1, 1), (3, 2, -4))]
+graphs =  [Plane((4, -2, 3), (1, 1, -5)), Line((0, 0, 1), (1, 3, -4)), Line((2, 5, -2), (8, -5, -1))]
 #graphs = [Plane((1, 1, 1), (0, i, 0)) for i in range(-200, 201)]
 
 # Variables
@@ -71,7 +71,9 @@ if __name__ == '__main__':
 
         for i in range(4):
             if rotations[i]:
-                plot.rotation[i % 2] += {0 : 1, 1 : -1}[i // 2] / FRAMERATE
+                plot.rotation[i % 2] += {0 : 1, 1 : -1}[i // 2] / FRAMERATE / 10
+                if i % 2 == 0:
+                    plot.rotation[0] = min(max(plot.rotation[0], math.radians(-90)), math.radians(90))
 
         plot.calculate_mesh()
         plot.draw(cam, graphs)

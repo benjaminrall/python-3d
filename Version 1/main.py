@@ -20,8 +20,8 @@ clock = pygame.time.Clock()
 cam = Camera(win, 0, 0, 128)
 
 cubes = []
-for i in range(-10, 11, 1):
-    for j in range(-10, 11, 1):
+for i in range(1):
+    for j in range(1):
         cubes.append(Cube(3 * i, 3 * j))
 
 # Variables
